@@ -57,11 +57,17 @@ delete('/operator/cities') do
   city = City.find(params.fetch('city_select').to_i)
   city.delete()
   @cities = City.all()
-  erb(:cities)end
+  erb(:cities)
+end
 
 get('/trains/:id') do
   @train = Train.find(params.fetch('id').to_i)
   erb(:train)
+end
+
+get('/cities/:id') do
+  @cities = City.find(params.fetch('id').to_i)
+  erb(:city)
 end
 
 get('/operator/cities') do
