@@ -25,4 +25,8 @@ class City
   define_method(:==) do |other|
     self.name().eql?(other.name()).&(self.id().eql?(other.id()))
   end
+
+  define_method(:delete) do
+    DB.exec("DELETE FROM cities WHERE id = #{@id};")
+  end
 end

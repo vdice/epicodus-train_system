@@ -37,4 +37,15 @@ describe(City) do
       expect(city1).to(eq(city2))
     end
   end
+
+  describe('#delete') do
+    it('lets you delete a city') do
+      city1 = City.new({:name => 'Portland', :id => nil})
+      city1.save()
+      city2 = City.new({:name => 'Portland', :id => nil})
+      city2.save()
+      city1.delete()
+      expect(City.all()).to(eq([city2]))
+    end
+  end
 end
