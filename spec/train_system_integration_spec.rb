@@ -114,6 +114,23 @@ describe('The Train System App', {:type => :feature}) do
         click_button('Add City')
         expect(page).to have_content('Denver')
       end
+
+      it('allows the operator to delete a city') do
+        city = City.new({:name => 'Portland', :id => nil})
+        city.save()
+        visit('/operator/cities')
+        find('#city_select').find(:xpath, 'option[1]').select_option
+        click_button('Delete City')
+        expect(page).to have_content('There aren\'t any cities yet.')
+      end
+
+      it('allows the operator to view a specific city') do
+        city = City.new({:name => 'Seattle', :id => nil})
+        city.save()
+        visit('/operator/cities')
+        click_link(city.name())
+        expect(page).to have_content(city.name())
+      end
     end
   end
 
