@@ -16,7 +16,7 @@ describe('The Train System App', {:type => :feature}) do
 
     describe('the operator trains path') do
       it('allows the operator to manage trains') do
-        train = Train.new({:id => nil, :eta => Time.new(2015), :city_id => 1})
+        train = Train.new({:id => nil, :eta => Time.new(2015)})
         train.save()
         visit('/operator')
         click_link('Manage All Trains')

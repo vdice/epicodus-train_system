@@ -1,14 +1,13 @@
 class Train
-  attr_reader(:id, :eta, :city_id)
+  attr_reader(:id, :eta)
 
   define_method(:initialize) do |attributes|
     @id = attributes.fetch(:id)
     @eta = attributes.fetch(:eta)
-    @city_id = attributes.fetch(:city_id)
   end
 
   define_method(:save) do
-    result = DB.exec("INSERT INTO trains (eta, city_id) VALUES ('#{@eta}', #{@city_id}) RETURNING id;")
+    result = DB.exec("INSERT INTO trains (eta) VALUES ('#{@eta}') RETURNING id;")
     @id = result.first().fetch('id').to_i()
   end
 
@@ -18,8 +17,7 @@ class Train
     returned_trains.each() do |train|
       id = train.fetch('id').to_i()
       eta = Time.parse(train.fetch('eta'))
-      city_id = train.fetch('city_id').to_i()
-      trains.push(Train.new({:id => id, :eta => eta, :city_id => city_id}))
+      trains.push(Train.new({:id => id, :eta => eta}))
     end
     trains
   end
@@ -30,11 +28,6 @@ class Train
 
   define_method(:update) do |attributes|
     set_items = []
-    if attributes.has_key?(:city_id)
-      @city_id = attributes.fetch(:city_id)
-      set_items.push("city_id = #{@city_id}")
-    end
-
     if attributes.has_key?(:eta)
       @eta = attributes.fetch(:eta)
       set_items.push("eta = '#{@eta}'")
