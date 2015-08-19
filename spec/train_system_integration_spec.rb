@@ -123,14 +123,31 @@ describe('The Train System App', {:type => :feature}) do
         click_button('Delete City')
         expect(page).to have_content('There aren\'t any cities yet.')
       end
+    end
+  end
 
-      it('allows the operator to view a specific city') do
-        city = City.new({:name => 'Seattle', :id => nil})
-        city.save()
-        visit('/operator/cities')
-        click_link(city.name())
-        expect(page).to have_content(city.name())
-      end
+  describe('the unique cities path') do
+    it('allows the operator to view a specific city') do
+      city = City.new({:name => 'Seattle', :id => nil})
+      city.save()
+      visit('/operator/cities')
+      click_link(city.name())
+      expect(page).to have_content(city.name())
+    end
+    it('allows the operator to update a city name') do
+      city = City.new({:name => 'Seattle', :id => nil})
+      city.save()
+      visit("/cities/#{city.id()}")
+      fill_in('name', :with => 'San Jose')
+      click_button('Update')
+      expect(page).to have_content('San Jose')
+    end
+    it('allows the operator to return to all cities page') do
+      city = City.new({:name => 'Eugene', :id => nil})
+      city.save()
+      visit("/cities/#{city.id()}")
+      click_link('Back')
+      expect(page).to have_content('All Cities')
     end
   end
 

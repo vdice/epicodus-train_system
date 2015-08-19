@@ -70,11 +70,6 @@ get('/cities/:id') do
   erb(:city)
 end
 
-get('/operator/cities') do
-  @cities = City.all()
-  erb(:cities)
-end
-
 patch('/trains/:id') do
   @train = Train.find(params.fetch('id').to_i)
   if !params.fetch('name').empty?()
@@ -87,4 +82,11 @@ patch('/trains/:id') do
   end
 
   erb(:train)
+end
+
+patch('/cities/:id') do
+  @city = City.find(params.fetch('id').to_i)
+  name = params.fetch('name')
+  @city.update({:name => name})
+  erb(:city)
 end
