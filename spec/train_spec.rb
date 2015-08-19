@@ -22,4 +22,10 @@ describe(Train) do
       expect(test_train.city_id()).to(eq(1))
     end
   end
+
+  describe('.all') do
+    it('starts out empty') do
+      expect(Train.all()).to(eq([]))
+    end
+  end
 end

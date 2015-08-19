@@ -11,4 +11,16 @@ class Train
     result = DB.exec("INSERT INTO trains (eta, city_id) VALUES ('#{@eta}', #{@city_id}) RETURNING id;")
     @id = result.first().fetch('id').to_i()
   end
+
+  define_singleton_method(:all) do
+    returned_trains = DB.exec("SELECT * FROM trains;")
+    trains = []
+    returned_trains.each() do |train|
+      id = attributes.fetch(:id).to_i()
+      eta = attributes.fetch(:eta)
+      city_id = attributes.fetch(:city_id).to_i()
+      trains.push(Train.new({:id => id, :eta => eta, :city_id => city_id}))
+    end
+    trains
+  end
 end
