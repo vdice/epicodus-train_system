@@ -31,9 +31,8 @@ class City
   end
 
   define_method(:update) do |attributes|
-    name = attributes.fetch(:name)
-    DB.exec("UPDATE cities SET name = '#{name}' WHERE id = #{@id};")
-    @name = name
+    @name = attributes.fetch(:name, @name)
+    DB.exec("UPDATE cities SET name = '#{@name}' WHERE id = #{@id};")
   end
 
   define_singleton_method(:find) do |id|
