@@ -29,4 +29,10 @@ class City
   define_method(:delete) do
     DB.exec("DELETE FROM cities WHERE id = #{@id};")
   end
+
+  define_method(:update) do |attributes|
+    name = attributes.fetch(:name)
+    DB.exec("UPDATE cities SET name = '#{name}' WHERE id = #{@id};")
+    @name = name
+  end
 end
