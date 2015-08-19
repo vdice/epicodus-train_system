@@ -18,3 +18,8 @@ end
 get('/passenger') do
   erb(:passenger)
 end
+
+get('/operator/trains') do
+  @trains = Train.all()
+  erb(:trains)
+end
