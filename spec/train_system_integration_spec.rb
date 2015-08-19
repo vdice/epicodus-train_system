@@ -37,6 +37,15 @@ describe('The Train System App', {:type => :feature}) do
         expect(page).to have_content('yellow')
         expect(page).to have_content("12:00AM")
       end
+
+      it('allows the operator to delete a train') do
+        train = Train.new({:name => 'yellow', :eta => Time.new(2015), :id => nil})
+        train.save()
+        visit('/operator/trains')
+        find('#train_select').find(:xpath, 'option[1]').select_option
+        click_button('Delete Train')
+        expect(page).to have_content('There aren\'t any trains yet.')
+      end
     end
 
     describe('the operator cities path') do

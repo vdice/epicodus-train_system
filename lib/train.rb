@@ -52,4 +52,12 @@ class Train
   define_method(:delete) do
     DB.exec("DELETE FROM trains WHERE id = #{@id};")
   end
+
+  define_singleton_method(:find) do |id|
+    Train.all.each do |train|
+      if train.id == id
+        return train
+      end
+    end
+  end
 end

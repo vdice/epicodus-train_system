@@ -71,4 +71,14 @@ describe(Train) do
       expect(Train.all()).to(eq([test_train2]))
     end
   end
+
+  describe('.find') do
+    it('returns a train instance based on id') do
+      test_train = Train.new({:name => 'red',:eta => Time.new(), :id => nil})
+      test_train.save()
+      test_train2 = Train.new({:name => 'blue',:eta => Time.new(1884), :id => nil})
+      test_train2.save()
+      expect(Train.find(test_train.id())).to(eq(test_train))
+    end
+  end
 end

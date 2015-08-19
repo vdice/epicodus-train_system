@@ -33,6 +33,13 @@ post('/operator/trains') do
   erb(:trains)
 end
 
+delete('/operator/trains') do
+  train = Train.find(params.fetch('train_id').to_i)
+  train.delete()
+  @trains = Train.all()
+  erb(:trains)
+end
+
 get('/operator/cities') do
   @cities = City.all()
   erb(:cities)
