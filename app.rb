@@ -23,3 +23,8 @@ get('/operator/trains') do
   @trains = Train.all()
   erb(:trains)
 end
+
+get('/operator/cities') do
+  @cities = City.all()
+  erb(:cities)
+end
