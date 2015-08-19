@@ -25,14 +25,16 @@
   <button type="submit" class="btn">Add Train</button>
 </form>
 
-<h3>Delete a Train</h3>
-<form action="/operator/trains" method="post" id="train_form">
-  <input type="hidden" name="_method" value="delete">
-  <select id="train_select" name="train_select" type="text" class="form-control" form="train_form">
-    <% @trains.each() do |train| %>
-      <option value="<%= train.id() %>"><%= train.name() %></option>
-    <% end %>
-  </select>
-  <br>
-  <button type="submit" class="btn">Delete Train</button>
-</form>
+<% if @trains.any?() %>
+  <h3>Delete a Train</h3>
+  <form action="/operator/trains" method="post" id="train_form">
+    <input type="hidden" name="_method" value="delete">
+    <select id="train_select" name="train_select" type="text" class="form-control" form="train_form">
+      <% @trains.each() do |train| %>
+        <option value="<%= train.id() %>"><%= train.name() %></option>
+      <% end %>
+    </select>
+    <br>
+    <button type="submit" class="btn">Delete Train</button>
+  </form>
+<% end %>

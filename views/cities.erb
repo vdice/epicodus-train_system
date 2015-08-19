@@ -22,14 +22,16 @@
   <button type="submit" class="btn">Add City</button>
 </form>
 
-<h3>Delete a City</h3>
-<form action="/operator/cities" method="post" id="city_form">
-  <input type="hidden" name="_method" value="delete">
-  <select id="city_select" name="city_select" type="text" class="form-control" form="city_form">
-    <% @cities.each() do |city| %>
-      <option value="<%= city.id() %>"><%= city.name() %></option>
-    <% end %>
-  </select>
-  <br>
-  <button type="submit" class="btn">Delete City</button>
-</form>
+<% if @cities.any?() %>
+  <h3>Delete a City</h3>
+  <form action="/operator/cities" method="post" id="city_form">
+    <input type="hidden" name="_method" value="delete">
+    <select id="city_select" name="city_select" type="text" class="form-control" form="city_form">
+      <% @cities.each() do |city| %>
+        <option value="<%= city.id() %>"><%= city.name() %></option>
+      <% end %>
+    </select>
+    <br>
+    <button type="submit" class="btn">Delete City</button>
+  </form>
+<% end %>

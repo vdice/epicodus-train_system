@@ -45,6 +45,7 @@ describe('The Train System App', {:type => :feature}) do
         find('#train_select').find(:xpath, 'option[1]').select_option
         click_button('Delete Train')
         expect(page).to have_content('There aren\'t any trains yet.')
+        expect(page).to_not have_content('Delete a Train')
       end
 
       it('allows the operator to view a specific train') do
@@ -122,6 +123,7 @@ describe('The Train System App', {:type => :feature}) do
         find('#city_select').find(:xpath, 'option[1]').select_option
         click_button('Delete City')
         expect(page).to have_content('There aren\'t any cities yet.')
+        expect(page).to_not have_content('Delete a City')
       end
     end
   end
