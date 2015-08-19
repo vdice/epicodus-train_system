@@ -1,1 +1,15 @@
-<h2><%= @train.name() %></h2>
+<h2><%= @train.name() %> <%= @train.eta().strftime("%I:%M %p") %></h2>
+
+<form action="/trains/<%= @train.id() %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" class="form-control">
+
+    <label for="eta">ETA</label>
+    <input type="time" name="eta" id="eta" class="form-control">
+  </div>
+
+  <button type="submit" class="btn">Update</button>
+
+</form>

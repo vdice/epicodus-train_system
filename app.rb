@@ -49,3 +49,11 @@ get('/operator/cities') do
   @cities = City.all()
   erb(:cities)
 end
+
+patch('/trains/:id') do
+  @train = Train.find(params.fetch('id').to_i)
+  name = params.fetch('name')
+  eta = Time.parse(params.fetch('eta'))
+  @train.update({:name => name, :eta => eta})
+  erb(:train)
+end

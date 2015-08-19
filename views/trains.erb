@@ -3,7 +3,7 @@
 <% if @trains.any?() %>
   <ul>
     <% @trains.each() do |train| %>
-      <li><a href="/trains/<%= train.id() %>"><%= train.name() %>, <%= train.eta().strftime("%I:%M%p") %></a> </li>
+      <li><a href="/trains/<%= train.id() %>"><%= train.name() %>, <%= train.eta().strftime("%I:%M %p") %></a> </li>
     <% end %>
   </ul>
 

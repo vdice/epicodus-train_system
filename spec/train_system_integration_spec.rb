@@ -21,7 +21,7 @@ describe('The Train System App', {:type => :feature}) do
         visit('/operator')
         click_link('Manage All Trains')
         expect(page).to have_content('yellow')
-        expect(page).to have_content(Time.new(2015).strftime("%I:%M%p"))
+        expect(page).to have_content(Time.new(2015).strftime("%I:%M %p"))
       end
       it('tells the operator there aren\'t any trains yet') do
         visit('/operator')
@@ -35,7 +35,7 @@ describe('The Train System App', {:type => :feature}) do
         fill_in('eta', :with => Time.new(2015))
         click_button('Add Train')
         expect(page).to have_content('yellow')
-        expect(page).to have_content(Time.new(2015).strftime("%I:%M%p"))
+        expect(page).to have_content(Time.new(2015).strftime("%I:%M %p"))
       end
 
       it('allows the operator to delete a train') do
@@ -51,8 +51,21 @@ describe('The Train System App', {:type => :feature}) do
         train = Train.new({:name => 'yellow', :eta => Time.new(2015), :id => nil})
         train.save()
         visit('/operator/trains')
-        click_link(train.name() + ", " + Time.new(2015).strftime("%I:%M%p"))
+        click_link(train.name() + ", " + Time.new(2015).strftime("%I:%M %p"))
         expect(page).to have_content(train.name())
+      end
+    end
+
+    describe('the operator unique train path') do
+      it('allows the operator to update a train') do
+        train = Train.new({:name => 'yellow', :eta => Time.new(2015), :id => nil})
+        train.save()
+        visit("/trains/#{train.id()}")
+        fill_in('name', :with => 'orange')
+        fill_in('eta', :with => Time.new(2015,4,5,13,45,30))
+        click_button('Update')
+        expect(page).to have_content('orange')
+        expect(page).to have_content(Time.new(2015,4,5,13,45,30).strftime("%I:%M %p"))
       end
     end
 
