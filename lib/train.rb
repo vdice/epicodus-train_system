@@ -29,24 +29,11 @@ class Train
   end
 
   define_method(:update) do |attributes|
-    set_items = []
-    if attributes.has_key?(:name)
-      @name = attributes.fetch(:name)
-      set_items.push("name = '#{@name}'")
-    end
 
-    if attributes.has_key?(:eta)
-      @eta = attributes.fetch(:eta)
-      set_items.push("eta = '#{@eta}'")
-    end
+    @name = attributes.fetch(:name, @name)
+    @eta = attributes.fetch(:eta, @eta)
 
-    set_string = ""
-    if set_items.length().>(1)
-      set_string = set_items.join(',')
-    else
-      set_string = set_items.join('')
-    end
-    DB.exec("UPDATE trains SET #{set_string} WHERE id = #{@id};")
+    DB.exec("UPDATE trains SET name = '#{@name}', eta = '#{@eta}' WHERE id = #{@id};")
   end
 
   define_method(:delete) do
