@@ -85,6 +85,13 @@ describe('The Train System App', {:type => :feature}) do
         expect(page).to have_content('yellow')
         expect(page).to have_content(Time.new(2015,4,5,13,45,30).strftime("%I:%M %p"))
       end
+      it('allows the operator to return to all trains page') do
+        train = Train.new({:name => 'yellow', :eta => Time.new(2015), :id => nil})
+        train.save()
+        visit("/trains/#{train.id()}")
+        click_link('Back')
+        expect(page).to have_content('All Trains')
+      end
     end
 
     describe('the operator cities path') do
