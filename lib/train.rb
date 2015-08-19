@@ -16,11 +16,15 @@ class Train
     returned_trains = DB.exec("SELECT * FROM trains;")
     trains = []
     returned_trains.each() do |train|
-      id = attributes.fetch(:id).to_i()
-      eta = attributes.fetch(:eta)
-      city_id = attributes.fetch(:city_id).to_i()
+      id = train.fetch('id').to_i()
+      eta = Time.parse(train.fetch('eta'))
+      city_id = train.fetch('city_id').to_i()
       trains.push(Train.new({:id => id, :eta => eta, :city_id => city_id}))
     end
     trains
+  end
+
+  define_method(:==) do |other|
+    self.id()==other.id()
   end
 end

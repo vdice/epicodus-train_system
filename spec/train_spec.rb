@@ -28,4 +28,14 @@ describe(Train) do
       expect(Train.all()).to(eq([]))
     end
   end
+
+  describe('#save') do
+    it('saves a train to the list of trains') do
+      test_train = Train.new({:id => nil, :eta => Time.new(), :city_id => 1})
+      test_train.save()
+      test_train2 = Train.new({:id => nil, :eta => Time.new(), :city_id => 1})
+      test_train2.save()
+      expect(Train.all()).to(eq([test_train, test_train2]))
+    end
+  end
 end
