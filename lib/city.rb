@@ -10,4 +10,13 @@ class City
     @id = result.first().fetch('id').to_i()
   end
 
+  define_singleton_method(:all) do
+    returned_cities = DB.exec("SELECT * FROM cities;")
+    cities = []
+    returned_cities.each() do |city|
+      name = city.fetch('name')
+      cities.push(City.new({:name => name}))
+    end
+    cities
+  end
 end

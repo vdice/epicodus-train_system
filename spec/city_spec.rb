@@ -15,4 +15,10 @@ describe(City) do
       expect(test_city.id()).to(be_an_instance_of(Fixnum))
     end
   end
+
+  describe('.all') do
+    it('starts out empty') do
+      expect(City.all()).to(eq([]))
+    end
+  end
 end
