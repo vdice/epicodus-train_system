@@ -66,7 +66,7 @@ get('/trains/:id') do
 end
 
 get('/cities/:id') do
-  @cities = City.find(params.fetch('id').to_i)
+  @city = City.find(params.fetch('id').to_i)
   erb(:city)
 end
 
