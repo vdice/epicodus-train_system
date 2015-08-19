@@ -1,13 +1,14 @@
 class Train
-  attr_reader(:id, :eta)
+  attr_reader(:name, :eta, :id)
 
   define_method(:initialize) do |attributes|
-    @id = attributes.fetch(:id)
+    @name = attributes.fetch(:name)
     @eta = attributes.fetch(:eta)
+    @id = attributes.fetch(:id)
   end
 
   define_method(:save) do
-    result = DB.exec("INSERT INTO trains (eta) VALUES ('#{@eta}') RETURNING id;")
+    result = DB.exec("INSERT INTO trains (name, eta) VALUES ('#{@name}', '#{@eta}') RETURNING id;")
     @id = result.first().fetch('id').to_i()
   end
 
@@ -15,9 +16,10 @@ class Train
     returned_trains = DB.exec("SELECT * FROM trains;")
     trains = []
     returned_trains.each() do |train|
-      id = train.fetch('id').to_i()
+      name = train.fetch('name')
       eta = Time.parse(train.fetch('eta'))
-      trains.push(Train.new({:id => id, :eta => eta}))
+      id = train.fetch('id').to_i()
+      trains.push(Train.new({:name => name, :eta => eta, :id => id}))
     end
     trains
   end
@@ -28,6 +30,11 @@ class Train
 
   define_method(:update) do |attributes|
     set_items = []
+    if attributes.has_key?(:name)
+      @name = attributes.fetch(:name)
+      set_items.push("name = '#{@name}'")
+    end
+
     if attributes.has_key?(:eta)
       @eta = attributes.fetch(:eta)
       set_items.push("eta = '#{@eta}'")

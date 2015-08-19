@@ -16,7 +16,7 @@ describe('The Train System App', {:type => :feature}) do
 
     describe('the operator trains path') do
       it('allows the operator to manage trains') do
-        train = Train.new({:id => nil, :eta => Time.new(2015)})
+        train = Train.new({:name => 'yellow', :eta => Time.new(2015), :id => nil})
         train.save()
         visit('/operator')
         click_link('Manage All Trains')
@@ -26,6 +26,13 @@ describe('The Train System App', {:type => :feature}) do
         visit('/operator')
         click_link('Manage All Trains')
         expect(page).to have_content('There aren\'t any trains yet.')
+      end
+
+      it('allows the operator to add a train') do
+        visit('/operator/trains')
+        fill_in('new_train', :with => 'yellow')
+        click_button('Add Train')
+        expect(page).to have_content()
       end
     end
 
