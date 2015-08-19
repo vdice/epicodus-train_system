@@ -1,0 +1,13 @@
+<h2>All Cities</h2>
+
+<% if @cities.any? %>
+  <ul>
+    <% @cities.each() do |city| %>
+      <li><a href="/cities/<%= city.id %>"><%= city.name %></a> </li>
+    <% end %>
+  </ul>
+<% else %>
+ <p>
+   There aren't any cities yet.
+ </p>
+<% end %>

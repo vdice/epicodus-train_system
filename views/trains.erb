@@ -3,7 +3,7 @@
 <% if @trains.any?() %>
   <ul>
     <% @trains.each() do |train| %>
-      <li><a href="/trains/<%= train.id() %>"><%= train.id() %>, <%= train.eta() %></a> </li>
+      <li><a href="/trains/<%= train.id() %>"><%= train.name() %>, <%= train.eta().strftime("%I:%M%p") %></a> </li>
     <% end %>
   </ul>
 
@@ -12,3 +12,15 @@
     There aren't any trains yet.
   </p>
 <% end %>
+
+<h3>Add New Train</h3>
+<form action="/operator/trains" method="post">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" class="form-control">
+
+    <label for="train_eta">ETA</label>
+    <input type="time" name="eta" id="eta" class="form-control">
+  </div>
+  <button type="submit" class="btn">Add Train</button>
+</form>

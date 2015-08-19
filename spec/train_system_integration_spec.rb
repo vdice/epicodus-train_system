@@ -20,7 +20,8 @@ describe('The Train System App', {:type => :feature}) do
         train.save()
         visit('/operator')
         click_link('Manage All Trains')
-        expect(page).to have_content(Time.new(2015))
+        expect(page).to have_content('yellow')
+        expect(page).to have_content("12:00AM")
       end
       it('tells the operator there aren\'t any trains yet') do
         visit('/operator')
@@ -30,9 +31,11 @@ describe('The Train System App', {:type => :feature}) do
 
       it('allows the operator to add a train') do
         visit('/operator/trains')
-        fill_in('new_train', :with => 'yellow')
+        fill_in('name', :with => 'yellow')
+        fill_in('eta', :with => Time.new(2015))
         click_button('Add Train')
-        expect(page).to have_content()
+        expect(page).to have_content('yellow')
+        expect(page).to have_content("12:00AM")
       end
     end
 
