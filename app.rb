@@ -34,7 +34,7 @@ post('/operator/trains') do
 end
 
 delete('/operator/trains') do
-  train = Train.find(params.fetch('train_id').to_i)
+  train = Train.find(params.fetch('train_select').to_i)
   train.delete()
   @trains = Train.all()
   erb(:trains)
@@ -52,8 +52,14 @@ end
 
 patch('/trains/:id') do
   @train = Train.find(params.fetch('id').to_i)
-  name = params.fetch('name')
-  eta = Time.parse(params.fetch('eta'))
-  @train.update({:name => name, :eta => eta})
+  if !params.fetch('name').empty?()
+    name = params.fetch('name')
+    @train.update({:name => name})
+  end
+  if !params.fetch('eta').empty?()
+    eta = Time.parse(params.fetch('eta'))
+    @train.update({:eta => eta})
+  end
+
   erb(:train)
 end

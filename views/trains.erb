@@ -17,20 +17,19 @@
 <form action="/operator/trains" method="post">
   <div class="form-group">
     <label for="name">Name</label>
-    <input type="text" name="name" id="name" class="form-control">
+    <input type="text" name="name" id="name" class="form-control" required>
 
     <label for="train_eta">ETA</label>
-    <input type="time" name="eta" id="eta" class="form-control">
+    <input type="time" name="eta" id="eta" class="form-control" required>
   </div>
   <button type="submit" class="btn">Add Train</button>
 </form>
 
 <h3>Delete a Train</h3>
-<form action="/operator/trains" method="post">
+<form action="/operator/trains" method="post" id="train_form">
   <input type="hidden" name="_method" value="delete">
-  <select id="train_select" name="train_select" type="text" class="form-control">
+  <select id="train_select" name="train_select" type="text" class="form-control" form="train_form">
     <% @trains.each() do |train| %>
-      <input type="hidden" name="train_id" value="<%= train.id() %>">
       <option value="<%= train.id() %>"><%= train.name() %></option>
     <% end %>
   </select>

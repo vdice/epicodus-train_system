@@ -57,7 +57,7 @@ describe('The Train System App', {:type => :feature}) do
     end
 
     describe('the operator unique train path') do
-      it('allows the operator to update a train') do
+      it('allows the operator to update a train info') do
         train = Train.new({:name => 'yellow', :eta => Time.new(2015), :id => nil})
         train.save()
         visit("/trains/#{train.id()}")
@@ -65,6 +65,24 @@ describe('The Train System App', {:type => :feature}) do
         fill_in('eta', :with => Time.new(2015,4,5,13,45,30))
         click_button('Update')
         expect(page).to have_content('orange')
+        expect(page).to have_content(Time.new(2015,4,5,13,45,30).strftime("%I:%M %p"))
+      end
+      it('allows the operator to update a train name only') do
+        train = Train.new({:name => 'yellow', :eta => Time.new(2015), :id => nil})
+        train.save()
+        visit("/trains/#{train.id()}")
+        fill_in('name', :with => 'orange')
+        click_button('Update')
+        expect(page).to have_content('orange')
+        expect(page).to have_content(Time.new(2015).strftime("%I:%M %p"))
+      end
+      it('allows the operator to update a train eta only') do
+        train = Train.new({:name => 'yellow', :eta => Time.new(2015), :id => nil})
+        train.save()
+        visit("/trains/#{train.id()}")
+        fill_in('eta', :with => Time.new(2015,4,5,13,45,30))
+        click_button('Update')
+        expect(page).to have_content('yellow')
         expect(page).to have_content(Time.new(2015,4,5,13,45,30).strftime("%I:%M %p"))
       end
     end
