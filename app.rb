@@ -24,6 +24,11 @@ get('/operator/trains') do
   erb(:trains)
 end
 
+get('/operator/cities') do
+  @cities = City.all()
+  erb(:cities)
+end
+
 post('/operator/trains') do
   name = params.fetch('name')
   eta = Time.parse(params.fetch('eta'))
@@ -31,6 +36,14 @@ post('/operator/trains') do
   new_train.save()
   @trains = Train.all()
   erb(:trains)
+end
+
+post('/operator/cities') do
+  name = params.fetch('name')
+  new_city = City.new({:name => name, :id => nil})
+  new_city.save()
+  @cities = City.all()
+  erb(:cities)
 end
 
 delete('/operator/trains') do

@@ -107,6 +107,13 @@ describe('The Train System App', {:type => :feature}) do
         click_link('Manage All Cities')
         expect(page).to have_content('There aren\'t any cities yet.')
       end
+
+      it('allows the operator to add a city') do
+        visit('/operator/cities')
+        fill_in('name', :with => 'Denver')
+        click_button('Add City')
+        expect(page).to have_content('Denver')
+      end
     end
   end
 

@@ -1,13 +1,35 @@
 <h2>All Cities</h2>
 
-<% if @cities.any? %>
+<% if @cities.any?() %>
   <ul>
     <% @cities.each() do |city| %>
-      <li><a href="/cities/<%= city.id %>"><%= city.name %></a> </li>
+      <li><a href="/cities/<%= city.id() %>"><%= city.name() %></a> </li>
     <% end %>
   </ul>
+
 <% else %>
- <p>
-   There aren't any cities yet.
- </p>
+  <p>
+    There aren't any cities yet.
+  </p>
 <% end %>
+
+<h3>Add New City</h3>
+<form action="/operator/cities" method="post">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" class="form-control" required>
+  </div>
+  <button type="submit" class="btn">Add City</button>
+</form>
+
+<h3>Delete a City</h3>
+<form action="/operator/cities" method="post" id="city_form">
+  <input type="hidden" name="_method" value="delete">
+  <select id="city_select" name="city_select" type="text" class="form-control" form="city_form">
+    <% @cities.each() do |city| %>
+      <option value="<%= city.id() %>"><%= city.name() %></option>
+    <% end %>
+  </select>
+  <br>
+  <button type="submit" class="btn">Delete City</button>
+</form>
