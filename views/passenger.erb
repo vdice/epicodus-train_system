@@ -4,7 +4,7 @@
   <% if @stops.any?() %>
   <ul>
     <% @stops.each do |stop| %>
-    <li><%= stop.train().name()%>, <%= stop.city().name() %>, <%= stop.eta().strftime("%I:%M %p") %></li>
+    <li><a href="/stops/<%= stop.id() %>"><%= stop.train().name()%>, <%= stop.city().name() %>, <%= stop.eta().strftime("%I:%M %p") %></a> </li>
     <% end %>
   </ul>
   <% else %>
@@ -20,7 +20,7 @@
   <% if @stops.any?() %>
     <ul>
       <% @stops.each do |stop| %>
-        <li><%= stop.city.name() %>, <%= stop.train.name() %>, <%= stop.eta().strftime("%I:%M %p") %></li>
+        <li><a href="/stops/<%= stop.id() %>"><%= stop.city.name() %>, <%= stop.train.name() %>, <%= stop.eta().strftime("%I:%M %p") %></a></li>
       <% end %>
     </ul>
 

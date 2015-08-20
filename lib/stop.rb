@@ -1,14 +1,16 @@
 class Stop
-  attr_reader(:train, :city, :eta)
+  attr_reader(:train, :city, :eta, :id)
 
   define_method(:initialize) do |attributes|
     @train = attributes.fetch(:train)
     @city = attributes.fetch(:city)
     @eta = attributes.fetch(:eta)
+    @id = attributes.fetch(:id)
   end
 
   define_method(:save) do
-    DB.exec("INSERT INTO stops (train_id, city_id, eta) VALUES (#{@train.id()}, #{@city.id()}, '#{@eta}');")
+    result = DB.exec("INSERT INTO stops (train_id, city_id, eta) VALUES (#{@train.id()}, #{@city.id()}, '#{@eta}') RETURNING id;")
+    @id = result.first().fetch('id').to_i()
   end
 
   define_singleton_method(:all) do
@@ -18,7 +20,8 @@ class Stop
       train = Train.find(stop.fetch('train_id').to_i())
       city = City.find(stop.fetch('city_id').to_i())
       eta = Time.parse(stop.fetch('eta'))
-      stops.push(Stop.new({:train => train, :city => city, :eta => eta}))
+      id = stop.fetch('id').to_i()
+      stops.push(Stop.new({:train => train, :city => city, :eta => eta, :id => id}))
     end
     stops
   end

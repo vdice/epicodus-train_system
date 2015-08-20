@@ -87,7 +87,7 @@ patch('/trains/:id') do
     city_id = params.fetch('city_select').to_i
     city = City.find(city_id)
 
-    new_stop = Stop.new({:train => @train, :city => city, :eta => eta})
+    new_stop = Stop.new({:train => @train, :city => city, :eta => eta, :id => nil})
 
     @train.update({:name => name, :city_id => city_id, :eta => eta})
   else

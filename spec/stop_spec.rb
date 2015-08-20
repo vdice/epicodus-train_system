@@ -4,12 +4,21 @@ describe(Stop) do
   before do
     @train = Train.new({:name => 'Budapest Lightning', :id => nil})
     @city = City.new({:name => 'Budapest', :id => nil})
-    @stop = Stop.new({:train => @train, :city => @city, :eta => Time.new(2015)})
+    @stop = Stop.new({:train => @train, :city => @city, :eta => Time.new(2015), :id => nil})
   end
 
   describe('#eta') do
     it('returns eta') do
       expect(@stop.eta()).to(eq(Time.new(2015)))
+    end
+  end
+
+  describe('#id') do
+    it('returns id') do
+      @train.save()
+      @city.save()    
+      @stop.save()
+      expect(@stop.id()).to(be_an_instance_of(Fixnum))
     end
   end
 

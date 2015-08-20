@@ -141,16 +141,24 @@ describe('The Train System App', {:type => :feature}) do
         train.save()
         city = City.new({:name => 'Eugene', :id => nil})
         city.save()
-        train.update({:city_ids => [city.id()]})
-        stop = Stop.new({:train => train, :city => city, :eta => Time.new()})
+        stop = Stop.new({:train => train, :city => city, :eta => Time.new(), :id => nil})
         stop.save()
         visit('/')
         click_link('Passenger')
-        expect(page).to have_selector('#trains_listing li[1]', text: "#{train.name()}, #{city.name()}, #{stop.eta().strftime("%I:%M %p")}")
-        expect(page).to have_selector('#cities_listing li[1]', text: "#{city.name()}, #{train.name()}, #{stop.eta().strftime("%I:%M %p")}")
+        expect(page).to have_selector('#trains_listing ul li a', text: "#{train.name()}, #{city.name()}, #{stop.eta().strftime("%I:%M %p")}")
+        expect(page).to have_selector('#cities_listing ul li a', text: "#{city.name()}, #{train.name()}, #{stop.eta().strftime("%I:%M %p")}")
       end
       it('allows passenger to purchase a ticket') do
-# todo
+        train = Train.new({:name => 'yellow', :id => nil})
+        train.save()
+        city = City.new({:name => 'Eugene', :id => nil})
+        city.save()
+        stop = Stop.new({:train => train, :city => city, :eta => Time.new(2014), :id => nil})
+        stop.save()
+        visit('/')
+        click_link('Passenger')
+        click_link('yellow, Eugene, 12:00 AM')
+        expect(page).to have_content('Purchase')
       end
     end
   end
