@@ -16,7 +16,13 @@
 
 <form action="/stops/<%= @stop.id() %>" method="post">
   <button type="submit" class="btn btn-success">Purchase</button>
-  <%= @message %>
+  <br><br>
+  <% if !@message.empty?() %>
+    <div class="alert alert-success">
+      <%= @message %>
+    </div>
+  <% end %>
+
 </form>
 
 <br><br>

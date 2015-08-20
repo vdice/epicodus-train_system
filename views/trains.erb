@@ -1,18 +1,22 @@
-<h2>All Trains</h2>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h2>All Trains</h2>
+  </div>
+</div>
+  <% if @trains.any?() %>
+    <ul class="list-group">
+      <% @trains.each() do |train| %>
+        <li class="list-group-item"><a href="/trains/<%= train.id() %>"><%= train.name() %></a> </li>
+      <% end %>
+    </ul>
 
-<% if @trains.any?() %>
-  <ul>
-    <% @trains.each() do |train| %>
-      <li><a href="/trains/<%= train.id() %>"><%= train.name() %></a> </li>
-    <% end %>
-  </ul>
+  <% else %>
+    <p>
+      There aren't any trains yet.
+    </p>
+  <% end %>
 
-<% else %>
-  <p>
-    There aren't any trains yet.
-  </p>
-<% end %>
-
+<br><br>
 <h3>Add New Train</h3>
 <form action="/operator/trains" method="post">
   <div class="form-group">

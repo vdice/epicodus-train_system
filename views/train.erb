@@ -1,14 +1,18 @@
-<h2><%= @train.name() %></h2>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h2><%= @train.name() %></h2>
+  </div>
 
-<% if @stops.any?() %>
-  <ul>
-    <% @stops.each() do |stop| %>
-      <% if stop.train().==(@train) %>
-        <li><%= stop.city().name() %>, <%= stop.eta().strftime("%I:%M %p") %></li>
+  <% if @stops.any?() %>
+    <ul>
+      <% @stops.each() do |stop| %>
+        <% if stop.train().==(@train) %>
+          <li><%= stop.city().name() %>, <%= stop.eta().strftime("%I:%M %p") %></li>
+        <% end %>
       <% end %>
-    <% end %>
-  </ul>
-<% end %>
+    </ul>
+  <% end %>
+</div>
 
 <form action="/trains/<%= @train.id() %>" method="post">
   <input type="hidden" name="_method" value="patch">

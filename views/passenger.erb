@@ -1,10 +1,13 @@
-<h2>Trains</h2>
-
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h2>Trains</h2>
+  </div>
+</div>
 <div id="trains_listing">
   <% if @stops.any?() %>
-  <ul>
+  <ul class=list-group>
     <% @stops.each do |stop| %>
-    <li><a href="/stops/<%= stop.id() %>"><%= stop.train().name()%>, <%= stop.city().name() %>, <%= stop.eta().strftime("%I:%M %p") %></a> </li>
+    <li class="list-group-item"><a href="/stops/<%= stop.id() %>"><strong><%= stop.train().name()%></strong>, <%= stop.city().name() %>, <%= stop.eta().strftime("%I:%M %p") %></a> </li>
     <% end %>
   </ul>
   <% else %>
@@ -13,22 +16,28 @@
   </p>
   <% end %>
 </div>
+<br><br>
 
-
-<h2>Cities</h2>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h2>Cities</h2>
+  </div>
+</div>
 <div id="cities_listing">
   <% if @stops.any?() %>
-    <ul>
-      <% @stops.each do |stop| %>
-        <li><a href="/stops/<%= stop.id() %>"><%= stop.city.name() %>, <%= stop.train.name() %>, <%= stop.eta().strftime("%I:%M %p") %></a></li>
-      <% end %>
-    </ul>
+  <ul class="list-group">
+    <% @stops.each do |stop| %>
+    <li class="list-group-item"><a href="/stops/<%= stop.id() %>"><strong><%= stop.city.name() %></strong>, <%= stop.train.name() %>, <%= stop.eta().strftime("%I:%M %p") %></a></li>
+    <% end %>
+  </ul>
 
   <% else %>
-    <p>
-      There are no stops
-    </p>
+  <p>
+    There are no stops
+  </p>
   <% end %>
 </div>
+
+
 
 <a href="/" class="btn btn-primary">Back</a>
