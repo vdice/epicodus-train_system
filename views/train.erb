@@ -1,27 +1,33 @@
 <h2><%= @train.name() %></h2>
 
-<ul>
-  <% @train.cities().each() do |city| %>
-
-    <li><%= city.name() %></li>
-
-  <% end %>
-</ul>
-
+<% if @stops.any?() %>
+  <ul>
+    <% @stops.each() do |stop| %>
+      <% if stop.train().==(@train) %>
+        <li><%= stop.city().name() %>, <%= stop.eta().strftime("%I:%M %p") %></li>
+      <% end %>
+    <% end %>
+  </ul>
+<% end %>
 
 <form action="/trains/<%= @train.id() %>" method="post">
   <input type="hidden" name="_method" value="patch">
   <div class="form-group">
     <label for="name">Train Name</label>
-    <input type="text" name="name" id="name" class="form-control">
+    <input type="text" name="name" id="name" class="form-control" value="<%= @train.name %>">
 
     <br>
     <label for="add_stop_info">New Stop</label>
     <div name="add_stop_info">
-      <label for="city">City</label>
-      <input type="text" name="city" id="city" class="form-control">
+      <label for="city_select">City</label>
+      <select id="city_select" name="city_select" type="text" class="form-control">
+        <% @cities.each() do |city| %>
+          <option value="<%= city.id %>"><%= city.name %></option>
+          <% end %>
+      </select>
+      <br>
       <label for="eta">ETA</label>
-      <input type="time" name="eta" id="eta" class="form-control">
+      <input type="time" name="eta" id="eta" class="form-control" required>
     </div>
   </div>
 

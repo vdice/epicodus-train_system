@@ -18,8 +18,6 @@ get('/operator') do
 end
 
 get('/passenger') do
-  # @trains = Train.all()
-  # @cities = City.all()
   @stops = Stop.all()
   erb(:passenger)
 end
@@ -67,6 +65,8 @@ end
 
 get('/trains/:id') do
   @train = Train.find(params.fetch('id').to_i)
+  @cities = City.all()
+  @stops = Stop.all()
   erb(:train)
 end
 
@@ -76,22 +76,24 @@ get('/cities/:id') do
 end
 
 patch('/trains/:id') do
+  @cities = City.all()
   @train = Train.find(params.fetch('id').to_i)
 
   name = params.fetch('name').empty?() ? @train.name() : params.fetch('name')
 
-  if !params.fetch('city').empty? && !params.fetch('eta').empty?
+  if !params.fetch('city_select').empty? && !params.fetch('eta').empty?
     eta = Time.parse(params.fetch('eta'))
-    city_name = params.fetch('city')
-    # city = City.find(city_name)
-    new_city = City.new({:name => city_name, :id => nil})
-    new_city.save()
+    city_id = params.fetch('city_select').to_i
+    city = City.find(city_id)
 
-    @train.update({:name => name, :city_id => new_city.id(), :eta => eta})
+    new_stop = Stop.new({:train => @train, :city => city, :eta => eta})
+
+    @train.update({:name => name, :city_id => city_id, :eta => eta})
   else
     @train.update({:name => name})
   end
 
+  @stops = Stop.all()
   erb(:train)
 end
 

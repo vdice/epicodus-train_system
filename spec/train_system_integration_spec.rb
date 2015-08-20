@@ -55,22 +55,14 @@ describe('The Train System App', {:type => :feature}) do
     end
 
     describe('the operator unique train path') do
-      it('allows the operator to update a train name only') do
-        train = Train.new({:name => 'yellow',  :id => nil})
-        train.save()
-        visit("/trains/#{train.id()}")
-        fill_in('name', :with => 'orange')
-        click_button('Update')
-        expect(page).to have_content('orange')
-      end
       it('allows the operator to add a city to a train') do
         train = Train.new({:name => 'yellow', :id => nil})
         train.save()
-        visit("/trains/#{train.id()}")
         city = City.new({:name => 'Eugene', :id => nil})
         city.save()
+        visit("/trains/#{train.id()}")
         fill_in('name', :with => 'blue')
-        fill_in('city', :with => 'Eugene')
+        find('#city_select').find(:xpath, 'option[1]').select_option
         fill_in('eta', :with => Time.new(2015))
         click_button('Update')
         expect(page).to have_content('Eugene')
