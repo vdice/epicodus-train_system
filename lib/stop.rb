@@ -32,4 +32,12 @@ class Stop
     same_eta = @eta.==(other.eta())
     same_train.&(same_city).&(same_eta)
   end
+
+  define_singleton_method(:find) do |id|
+    Stop.all.each do |stop|
+      if id == stop.id
+        return stop
+      end
+    end
+  end
 end

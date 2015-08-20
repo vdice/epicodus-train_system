@@ -16,7 +16,7 @@ describe(Stop) do
   describe('#id') do
     it('returns id') do
       @train.save()
-      @city.save()    
+      @city.save()
       @stop.save()
       expect(@stop.id()).to(be_an_instance_of(Fixnum))
     end
@@ -46,6 +46,15 @@ describe(Stop) do
   describe('#train') do
     it('returns the train') do
       expect(@stop.train()).to(eq(@train))
+    end
+  end
+
+  describe('.find') do
+    it('returns stop by id') do
+      @train.save()
+      @city.save()
+      @stop.save()
+      expect(Stop.find(@stop.id())).to(eq(@stop))
     end
   end
 end

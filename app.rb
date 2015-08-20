@@ -104,3 +104,8 @@ patch('/cities/:id') do
   @city.update({:name => name})
   erb(:city)
 end
+
+get('/stops/:id') do
+  @stop = 
+  erb(:purchase)
+end
