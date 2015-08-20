@@ -1,0 +1,15 @@
+<h2><%= @train.name() %></h2>
+
+<% @train.cities.each do |city| %>
+  <ul>
+    <li><%= city.name %>, <%= @stop.eta().strftime("%I:%M %p") %></li>
+  </ul>
+<% end %>
+
+<form action="/stops/<%= @stop.id() %>" method="post">
+  <button type="submit" class="btn btn-success">Purchase</button>
+</form>
+<br>
+<p>
+  <%= @message %>
+</p>

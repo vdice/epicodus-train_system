@@ -106,6 +106,15 @@ patch('/cities/:id') do
 end
 
 get('/stops/:id') do
-  @stop = 
+  @message =""
+  @stop = Stop.find(params.fetch('id').to_i)
+  @train = @stop.train()
+  erb(:purchase)
+end
+
+post('/stops/:id') do
+  @message = "You have purchased your ticket!"
+  @stop = Stop.find(params.fetch('id').to_i)
+  @train = @stop.train()
   erb(:purchase)
 end

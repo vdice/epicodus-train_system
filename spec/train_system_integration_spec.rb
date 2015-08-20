@@ -158,7 +158,8 @@ describe('The Train System App', {:type => :feature}) do
         visit('/')
         click_link('Passenger')
         click_link('yellow, Eugene, 12:00 AM')
-        expect(page).to have_content('Purchase')
+        click_button('Purchase')
+        expect(page).to have_content('You have purchased your ticket!')
       end
     end
   end
