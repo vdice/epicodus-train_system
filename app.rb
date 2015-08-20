@@ -19,6 +19,8 @@ end
 
 get('/passenger') do
   @stops = Stop.all()
+  @trains = Train.all()
+  @cities = City.all()
   erb(:passenger)
 end
 
@@ -36,7 +38,6 @@ post('/operator/trains') do
   name = params.fetch('name')
   new_train = Train.new({:name => name, :id => nil})
   new_train.save()
-
   @trains = Train.all()
   erb(:trains)
 end

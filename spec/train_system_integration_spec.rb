@@ -146,9 +146,11 @@ describe('The Train System App', {:type => :feature}) do
         stop.save()
         visit('/')
         click_link('Passenger')
-        expect(page).to have_content(train.name())
-        expect(page).to have_content(city.name())
-        expect(page).to have_content(stop.eta())
+        expect(page).to have_selector('#trains_listing li[1]', text: "#{train.name()}, #{city.name()}, #{stop.eta().strftime("%I:%M %p")}")
+        expect(page).to have_selector('#cities_listing li[1]', text: "#{city.name()}, #{train.name()}, #{stop.eta().strftime("%I:%M %p")}")
+      end
+      it('allows passenger to purchase a ticket') do
+# todo
       end
     end
   end

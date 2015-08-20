@@ -1,15 +1,34 @@
 <h2>Trains</h2>
 
-
-
-<ul>
-  <% @stops.each do |stop| %>
-  <li><%= stop.train.name()%>, <%= stop.city.name %>, <%= stop.eta %></li>
+<div id="trains_listing">
+  <% if @stops.any?() %>
+  <ul>
+    <% @stops.each do |stop| %>
+    <li><%= stop.train().name()%>, <%= stop.city().name() %>, <%= stop.eta().strftime("%I:%M %p") %></li>
+    <% end %>
+  </ul>
+  <% else %>
+  <p>
+    There are no stops.
+  </p>
   <% end %>
-</ul>
+</div>
 
 
 <h2>Cities</h2>
+<div id="cities_listing">
+  <% if @stops.any?() %>
+    <ul>
+      <% @stops.each do |stop| %>
+        <li><%= stop.city.name() %>, <%= stop.train.name() %>, <%= stop.eta().strftime("%I:%M %p") %></li>
+      <% end %>
+    </ul>
 
+  <% else %>
+    <p>
+      There are no stops
+    </p>
+  <% end %>
+</div>
 
 <a href="/">Back</a>
