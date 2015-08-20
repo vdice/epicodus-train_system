@@ -28,4 +28,12 @@ describe(Stop) do
     end
   end
 
+  describe('#city') do
+    it('returns the city') do
+      train = Train.new({:name => 'Budapest Lightning', :id => nil})
+      city = City.new({:name => 'Budapest', :id => nil})
+      stop = Stop.new({:train => train, :city => city, :eta => Time.new(2015)})
+      expect(stop.city()).to(eq(city))
+    end
+  end
 end
