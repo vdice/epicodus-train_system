@@ -148,6 +148,22 @@ describe('The Train System App', {:type => :feature}) do
         expect(page).to have_selector('#trains_listing ul li a', text: "#{train.name()}, #{city.name()}, #{stop.eta().strftime("%I:%M %p")}")
         expect(page).to have_selector('#cities_listing ul li a', text: "#{city.name()}, #{train.name()}, #{stop.eta().strftime("%I:%M %p")}")
       end
+      it('allows passenger to view details on a stop') do
+        train = Train.new({:name => 'yellow', :id => nil})
+        train.save()
+        city = City.new({:name => 'Eugene', :id => nil})
+        city.save()
+        city2 = City.new({:name => 'Salem', :id => nil})
+        city2.save()
+        stop = Stop.new({:train => train, :city => city, :eta => Time.new(2014,1,1,2), :id => nil})
+        stop.save()
+        stop2 = Stop.new({:train => train, :city => city2, :eta => Time.new(2014,1,1,1), :id => nil})
+        stop2.save()
+        visit('/passenger')
+        click_link('yellow, Eugene, 02:00 AM')
+        expect(page).to have_content('2:00 AM')
+        expect(page).to have_content('1:00 AM')
+      end
       it('allows passenger to purchase a ticket') do
         train = Train.new({:name => 'yellow', :id => nil})
         train.save()
@@ -155,8 +171,7 @@ describe('The Train System App', {:type => :feature}) do
         city.save()
         stop = Stop.new({:train => train, :city => city, :eta => Time.new(2014), :id => nil})
         stop.save()
-        visit('/')
-        click_link('Passenger')
+        visit('/passenger')
         click_link('yellow, Eugene, 12:00 AM')
         click_button('Purchase')
         expect(page).to have_content('You have purchased your ticket!')

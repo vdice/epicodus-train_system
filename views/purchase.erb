@@ -2,7 +2,15 @@
 
 <% @train.cities.each do |city| %>
   <ul>
-    <li><%= city.name %>, <%= @stop.eta().strftime("%I:%M %p") %></li>
+    <li>
+      <% eta = Time.new() %>
+      <% Stop.all.each do |stop| %>
+        <% if stop.city == city
+          eta = stop.eta
+        end %>
+      <% end %>
+    <%= city.name %>, <%= eta.strftime("%I:%M %p") %>
+    </li>
   </ul>
 <% end %>
 
