@@ -79,21 +79,10 @@ end
 patch('/trains/:id') do
   @cities = City.all()
   @train = Train.find(params.fetch('id').to_i)
-
-  name = params.fetch('name').empty?() ? @train.name() : params.fetch('name')
-
-  if !params.fetch('city_select').empty? && !params.fetch('eta').empty?
-    eta = Time.parse(params.fetch('eta'))
-    city_id = params.fetch('city_select').to_i
-    city = City.find(city_id)
-
-    new_stop = Stop.new({:train => @train, :city => city, :eta => eta, :id => nil})
-
-    @train.update({:name => name, :city_id => city_id, :eta => eta})
-  else
-    @train.update({:name => name})
-  end
-
+  name = params.fetch('name')
+  city_id = params.fetch('city_select')
+  eta = Time.parse(params.fetch('eta'))
+  @train.update({:name => name, :city_id => city_id, :eta => eta})
   @stops = Stop.all()
   erb(:train)
 end
