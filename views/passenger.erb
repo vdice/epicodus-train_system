@@ -3,7 +3,7 @@
 <ul>
   <% @trains.each do |train| %>
     <% train.cities.each do |city| %>
-    <li><%= train.name()%>, <%= train.eta.strftime("%I:%M %p") %>, <%= city.name %></li>
+    <li><%= train.name()%>, <%= city.name %></li>
     <% end %>
   <% end %>
 

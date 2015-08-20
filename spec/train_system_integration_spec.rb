@@ -16,12 +16,11 @@ describe('The Train System App', {:type => :feature}) do
 
     describe('the operator trains path') do
       it('allows the operator to manage trains') do
-        train = Train.new({:name => 'yellow', :eta => Time.new(2015), :id => nil})
+        train = Train.new({:name => 'yellow', :id => nil})
         train.save()
         visit('/operator')
         click_link('Manage All Trains')
         expect(page).to have_content('yellow')
-        expect(page).to have_content(Time.new(2015).strftime("%I:%M %p"))
       end
       it('tells the operator there aren\'t any trains yet') do
         visit('/operator')
@@ -32,14 +31,12 @@ describe('The Train System App', {:type => :feature}) do
       it('allows the operator to add a train') do
         visit('/operator/trains')
         fill_in('name', :with => 'yellow')
-        fill_in('eta', :with => Time.new(2015))
         click_button('Add Train')
         expect(page).to have_content('yellow')
-        expect(page).to have_content(Time.new(2015).strftime("%I:%M %p"))
       end
 
       it('allows the operator to delete a train') do
-        train = Train.new({:name => 'yellow', :eta => Time.new(2015), :id => nil})
+        train = Train.new({:name => 'yellow', :id => nil})
         train.save()
         visit('/operator/trains')
         find('#train_select').find(:xpath, 'option[1]').select_option
@@ -49,57 +46,36 @@ describe('The Train System App', {:type => :feature}) do
       end
 
       it('allows the operator to view a specific train') do
-        train = Train.new({:name => 'yellow', :eta => Time.new(2015), :id => nil})
+        train = Train.new({:name => 'yellow', :id => nil})
         train.save()
         visit('/operator/trains')
-        click_link(train.name() + ", " + Time.new(2015).strftime("%I:%M %p"))
+        click_link(train.name())
         expect(page).to have_content(train.name())
       end
     end
 
     describe('the operator unique train path') do
-      it('allows the operator to update a train info') do
-        train = Train.new({:name => 'yellow', :eta => Time.new(2015), :id => nil})
-        train.save()
-        visit("/trains/#{train.id()}")
-        fill_in('name', :with => 'orange')
-        fill_in('eta', :with => Time.new(2015,4,5,13,45,30))
-        click_button('Update')
-        expect(page).to have_content('orange')
-        expect(page).to have_content(Time.new(2015,4,5,13,45,30).strftime("%I:%M %p"))
-      end
       it('allows the operator to update a train name only') do
-        train = Train.new({:name => 'yellow', :eta => Time.new(2015), :id => nil})
+        train = Train.new({:name => 'yellow',  :id => nil})
         train.save()
         visit("/trains/#{train.id()}")
         fill_in('name', :with => 'orange')
         click_button('Update')
         expect(page).to have_content('orange')
-        expect(page).to have_content(Time.new(2015).strftime("%I:%M %p"))
-      end
-      it('allows the operator to update a train eta only') do
-        train = Train.new({:name => 'yellow', :eta => Time.new(2015), :id => nil})
-        train.save()
-        visit("/trains/#{train.id()}")
-        fill_in('eta', :with => Time.new(2015,4,5,13,45,30))
-        click_button('Update')
-        expect(page).to have_content('yellow')
-        expect(page).to have_content(Time.new(2015,4,5,13,45,30).strftime("%I:%M %p"))
       end
       it('allows the operator to add a city to a train') do
-        train = Train.new({:name => 'yellow', :eta => Time.new(2015), :id => nil})
+        train = Train.new({:name => 'yellow', :id => nil})
         train.save()
         visit("/trains/#{train.id()}")
         city = City.new({:name => 'Eugene', :id => nil})
         city.save()
         fill_in('name', :with => 'blue')
-        fill_in('eta', :with => Time.new(2015,4,5,13,45,30))
         fill_in('city', :with => 'Eugene')
         click_button('Update')
         expect(page).to have_content('Eugene')
       end
       it('allows the operator to return to all trains page') do
-        train = Train.new({:name => 'yellow', :eta => Time.new(2015), :id => nil})
+        train = Train.new({:name => 'yellow', :id => nil})
         train.save()
         visit("/trains/#{train.id()}")
         click_link('Back')
@@ -168,15 +144,15 @@ describe('The Train System App', {:type => :feature}) do
   describe('The passenger app') do
     describe('the passenger home page path') do
       it('allows passengers to to visit their home page') do
-        train = Train.new({:name => 'yellow', :eta => Time.new(2015), :id => nil})
+        train = Train.new({:name => 'yellow', :id => nil})
         train.save()
         city = City.new({:name => 'Eugene', :id => nil})
         city.save()
         train.update({:city_ids => [city.id()]})
+        # stop = Stop.new(train.id(), city.id(), Time.new())
         visit('/')
         click_link('Passenger')
         expect(page).to have_content(train.name())
-        expect(page).to have_content(train.eta().strftime("%I:%M %p"))
         expect(page).to have_content(city.name())
       end
     end

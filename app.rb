@@ -33,8 +33,7 @@ end
 
 post('/operator/trains') do
   name = params.fetch('name')
-  eta = Time.parse(params.fetch('eta'))
-  new_train = Train.new({:name => name, :eta => eta, :id => nil})
+  new_train = Train.new({:name => name, :id => nil})
   new_train.save()
 
   @trains = Train.all()
@@ -76,13 +75,13 @@ end
 patch('/trains/:id') do
   @train = Train.find(params.fetch('id').to_i)
   name = params.fetch('name').empty?() ? @train.name() : params.fetch('name')
-  eta = params.fetch('eta').empty?() ? @train.eta() : Time.parse(params.fetch('eta'))
+  # eta = params.fetch('eta').empty?() ? @train.eta() : Time.parse(params.fetch('eta'))
 
   city = params.fetch('city')
   new_city = City.new({:name => city, :id => nil})
   new_city.save()
 
-  @train.update({:name => name, :eta => eta, :city_ids => [new_city.id()]})
+  @train.update({:name => name, :city_ids => [new_city.id()]})
   erb(:train)
 end
 
