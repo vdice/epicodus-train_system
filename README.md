@@ -23,8 +23,12 @@ name | id
 ------+----
 
 Table: trains
-name | eta | id
-------+-----+----
+name | id
+------+----
+
+Table: stops
+train_id | city_id | eta
+----------+---------+-----
 
 Please visit (heroku app link) to use the application.
 
