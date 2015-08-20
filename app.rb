@@ -16,8 +16,9 @@ get('/operator') do
 end
 
 get('/passenger') do
-  @trains = Train.all()
-  @cities = City.all()
+  # @trains = Train.all()
+  # @cities = City.all()
+  @stops = Stop.all()
   erb(:passenger)
 end
 

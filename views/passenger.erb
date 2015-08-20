@@ -1,12 +1,19 @@
 <h2>Trains</h2>
 
-<ul>
+<!-- <ul>
   <% @trains.each do |train| %>
     <% train.cities.each do |city| %>
-    <li><%= train.name()%>, <%= city.name %></li>
+    <li><%= train.name()%>, <%= city.name %>, <%= stop.eta %></li>
     <% end %>
   <% end %>
+</ul> -->
 
+<ul>
+  <% @stops.each do |stop| %>
+  <!-- <% train.cities.each do |city| %> -->
+  <li><%= stop.train.name()%>, <%= stop.city.name %>, <%= stop.eta %></li>
+  <!-- <% end %> -->
+  <% end %>
 </ul>
 
 

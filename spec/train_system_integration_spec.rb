@@ -149,11 +149,13 @@ describe('The Train System App', {:type => :feature}) do
         city = City.new({:name => 'Eugene', :id => nil})
         city.save()
         train.update({:city_ids => [city.id()]})
-        # stop = Stop.new(train.id(), city.id(), Time.new())
+        stop = Stop.new({:train => train, :city => city, :eta => Time.new()})
+        stop.save()
         visit('/')
         click_link('Passenger')
         expect(page).to have_content(train.name())
         expect(page).to have_content(city.name())
+        expect(page).to have_content(stop.eta())
       end
     end
   end
