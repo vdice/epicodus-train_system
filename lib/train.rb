@@ -32,8 +32,11 @@ class Train
 
     @name = attributes.fetch(:name, @name)
     @eta = attributes.fetch(:eta, @eta)
-
     DB.exec("UPDATE trains SET name = '#{@name}', eta = '#{@eta}' WHERE id = #{@id};")
+
+    attributes.fetch(:city_ids, []).each() do |city_id|
+      DB.exec("INSERT INTO trains_cities (train_id, city_id) VALUES (#{self.id()}, #{city_id});")
+    end
   end
 
   define_method(:delete) do
@@ -45,12 +48,6 @@ class Train
       if train.id == id
         return train
       end
-    end
-  end
-
-  define_method(:add_cities) do |cities|
-    cities.each() do |city|
-      DB.exec("INSERT INTO trains_cities (train_id, city_id) VALUES (#{self.id()}, #{city.id()});")
     end
   end
 

@@ -59,6 +59,16 @@ describe(Train) do
       test_train.update({:eta => Time.new(2016)})
       expect(test_train.eta()).to(eq(Time.new(2016)))
     end
+    it('updates cities for train') do
+      test_train = Train.new({:name => 'red',:eta => Time.new(), :id => nil})
+      test_train.save()
+      city1 = City.new({:name => 'Portland', :id => nil})
+      city2 = City.new({:name => 'Boulder', :id => nil})
+      city1.save()
+      city2.save()
+      test_train.update({:city_ids => [city1.id(), city2.id()]})
+      expect(test_train.cities()).to(eq([city1, city2]))
+    end
   end
 
   describe('#delete') do
@@ -81,18 +91,4 @@ describe(Train) do
       expect(Train.find(test_train.id())).to(eq(test_train))
     end
   end
-
-  describe('#add_cities') do
-    it('adds cities to train') do
-      test_train = Train.new({:name => 'red',:eta => Time.new(), :id => nil})
-      test_train.save()
-      city1 = City.new({:name => 'Portland', :id => nil})
-      city2 = City.new({:name => 'Boulder', :id => nil})
-      city1.save()
-      city2.save()
-      test_train.add_cities([city1, city2])
-      expect(test_train.cities()).to(eq([city1, city2]))
-    end
-  end
-
 end
