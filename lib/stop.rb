@@ -8,7 +8,7 @@ class Stop
   end
 
   define_method(:save) do
-    DB.exec("INSERT INTO stops (train_id, city_id, eta) VALUES (#{@train.id()}, #{@city.id()}, '#{@eta}')")
+    DB.exec("INSERT INTO stops (train_id, city_id, eta) VALUES (#{@train.id()}, #{@city.id()}, '#{@eta}');")
   end
 
   define_singleton_method(:all) do

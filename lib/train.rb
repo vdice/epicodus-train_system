@@ -31,8 +31,10 @@ class Train
     @name = attributes.fetch(:name, @name)
     DB.exec("UPDATE trains SET name = '#{@name}' WHERE id = #{@id};")
 
-    attributes.fetch(:city_ids, []).each() do |city_id|
-      DB.exec("INSERT INTO stops (train_id, city_id) VALUES (#{self.id()}, #{city_id});")
+    if attributes.has_key?(:city_id)
+      city_id = attributes.fetch(:city_id).to_i()
+      eta = attributes.fetch(:eta)
+      DB.exec("INSERT INTO stops (train_id, city_id, eta) VALUES (#{self.id()}, #{city_id}, '#{eta}');")
     end
   end
 

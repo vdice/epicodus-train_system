@@ -3,7 +3,9 @@ require('sinatra/reloader')
 also_reload('lib/**/*.rb')
 require('./lib/city')
 require('./lib/train')
+require('./lib/stop')
 require('pg')
+require('pry')
 
 DB = PG.connect({:dbname => "train_system_test"})
 
@@ -75,14 +77,21 @@ end
 
 patch('/trains/:id') do
   @train = Train.find(params.fetch('id').to_i)
+
   name = params.fetch('name').empty?() ? @train.name() : params.fetch('name')
-  # eta = params.fetch('eta').empty?() ? @train.eta() : Time.parse(params.fetch('eta'))
 
-  city = params.fetch('city')
-  new_city = City.new({:name => city, :id => nil})
-  new_city.save()
+  if !params.fetch('city').empty? && !params.fetch('eta').empty?
+    eta = Time.parse(params.fetch('eta'))
+    city_name = params.fetch('city')
+    # city = City.find(city_name)
+    new_city = City.new({:name => city_name, :id => nil})
+    new_city.save()
 
-  @train.update({:name => name, :city_ids => [new_city.id()]})
+    @train.update({:name => name, :city_id => new_city.id(), :eta => eta})
+  else
+    @train.update({:name => name})
+  end
+
   erb(:train)
 end
 

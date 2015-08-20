@@ -42,11 +42,9 @@ describe(Train) do
     it('updates cities for train') do
       @test_train.save()
       city1 = City.new({:name => 'Portland', :id => nil})
-      city2 = City.new({:name => 'Boulder', :id => nil})
       city1.save()
-      city2.save()
-      @test_train.update({:city_ids => [city1.id(), city2.id()]})
-      expect(@test_train.cities()).to(eq([city1, city2]))
+      @test_train.update({:city_id => city1.id(), :eta => Time.new()})
+      expect(@test_train.cities()).to(eq([city1]))
     end
   end
 

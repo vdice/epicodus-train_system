@@ -71,6 +71,7 @@ describe('The Train System App', {:type => :feature}) do
         city.save()
         fill_in('name', :with => 'blue')
         fill_in('city', :with => 'Eugene')
+        fill_in('eta', :with => Time.new(2015))
         click_button('Update')
         expect(page).to have_content('Eugene')
       end
