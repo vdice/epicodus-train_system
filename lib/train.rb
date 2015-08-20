@@ -47,4 +47,21 @@ class Train
       end
     end
   end
+
+  define_method(:add_cities) do |cities|
+    cities.each() do |city|
+      DB.exec("INSERT INTO trains_cities (train_id, city_id) VALUES (#{self.id()}, #{city.id()});")
+    end
+  end
+
+  define_method(:cities) do
+    returned_cities = DB.exec("SELECT cities.* FROM trains JOIN trains_cities ON (#{self.id()} = trains_cities.train_id) JOIN cities ON (trains_cities.city_id = cities.id) WHERE trains.id = #{self.id()};")
+    cities = []
+    returned_cities.each() do |city|
+      name = city.fetch('name')
+      id = city.fetch('id').to_i()
+      cities.push(City.new({:name => name, :id => id}))
+    end
+    cities
+  end
 end

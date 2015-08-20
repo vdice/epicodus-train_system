@@ -156,9 +156,16 @@ describe('The Train System App', {:type => :feature}) do
   describe('The passenger app') do
     describe('the passenger home page path') do
       it('allows passengers to to visit their home page') do
+        train = Train.new({:name => 'yellow', :eta => Time.new(2015), :id => nil})
+        train.save()
+        city = City.new({:name => 'Eugene', :id => nil})
+        city.save()
+        train.add_cities([city])
         visit('/')
         click_link('Passenger')
-        expect(page).to have_content('View All Trains')
+        expect(page).to have_content(train.name())
+        expect(page).to have_content(train.eta().strftime("%I:%M %p"))
+        expect(page).to have_content(city.name())
       end
     end
   end
